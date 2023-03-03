@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 function Func1() { //checkradio
   var [test, setTest] = useState();
   const obj = [
@@ -115,7 +115,74 @@ function Func4() { //todo list 2
       {
         list.map(w => <p>{w}</p>)
       }
+    </div>
+  )
+}
+var w = 0, g = 0;
+function Func5() { //test useEffect()
+  var [state, setState] = useState(1);
+  //setState('a'); //nếu để setState ở đây nó sẽ liên tục reload lại function
+  //console.log('a'); // setState phải đặt ở event như onclick,.... để ko liên tục callback lại function
 
+  useEffect(() => {
+    setState(w)
+  }, [])
+  return (
+    <div>
+      <input></input>
+      <p>{state}</p>
+      {console.log(state)}
+    </div>
+  )
+}
+function Func6() { //event with useEffect()
+  var [state, setState] = useState(false)
+  useEffect(() => {
+    var test = () => {
+      var w = window.scrollY
+      console.log(w)
+      if (w >= 200) {
+        setState(true)
+        //w>=200 sẽ call setState liên tục
+        //sẽ chỉ call setState, ko reload lại nếu w>=200
+        //(call setState sẽ check data static hiện tại và trước đó nếu data static hiện tại value vẫn giống data static trước sẽ ko reload)
+      }
+      else {
+        setState(false)
+        //w<200 sẽ call setState liên tục
+        //sẽ chỉ call setState, ko reload lại nếu w<200
+        //(call setState sẽ check data static hiện tại và trước đó nếu data static hiện tại value vẫn giống data static trước sẽ ko reload)
+
+      }
+    }
+    window.addEventListener('scroll', test)
+  })
+  return (
+    <div Style='height:10000px'>
+      {
+        (state && <p Style='position:fixed; bottom:50px;left:50px'>aaaa</p>)
+      }
+    </div>
+  )
+}
+function Func7() { //setTimeinterval
+  var [state, setState] = useState(0);
+  // setInterval(()=>{
+  //   setState(state-1);
+  // },1000) mỗi lần reload sẽ setInterval() sẽ chạy 1 lần
+  // sau khi reload setInterval() trước đó sẽ vẫn ton tai
+  console.log('a');
+  useEffect(()=>{
+    var timerInterval=setInterval(()=>{
+    setState(pre=>pre+1); //pre=>pre sẽ ref vào static trước
+    return ()=>clearInterval(timerInterval) //func này sẽ chạy trước khi funcreturnvềelement này unmount
+  },1000)},[])//call static setInterval() 1 lần,mỗi giây setInterval() sẽ call setState()
+  //check lại setInterval và setTimeout  
+  return (
+    <div>
+      <h1>
+        {state}
+      </h1>
     </div>
   )
 }
@@ -123,7 +190,7 @@ function App() {
 
   return (
     <div className="App">
-      <Func4 />
+      
     </div>
   );
 }

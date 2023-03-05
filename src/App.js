@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useLayoutEffect } from "react";
 function Func1() { //checkradio
   var [test, setTest] = useState();
   const obj = [
@@ -172,11 +172,12 @@ function Func7() { //setTimeinterval
   // },1000) mỗi lần reload sẽ setInterval() sẽ chạy 1 lần
   // sau khi reload setInterval() trước đó sẽ vẫn ton tai
   console.log('a');
-  useEffect(()=>{
-    var timerInterval=setInterval(()=>{
-    setState(pre=>pre+1); //pre=>pre sẽ ref vào static trước
-    return ()=>clearInterval(timerInterval) //func này sẽ chạy trước khi funcreturnvềelement này unmount
-  },1000)},[])//call static setInterval() 1 lần,mỗi giây setInterval() sẽ call setState()
+  useEffect(() => {
+    var timerInterval = setInterval(() => {
+      setState(pre => pre + 1); //pre=>pre sẽ ref vào static trước
+      return () => clearInterval(timerInterval) //func này sẽ chạy trước khi funcreturnvềelement này unmount
+    }, 1000)
+  }, [])//call static setInterval() 1 lần,mỗi giây setInterval() sẽ call setState()
   //check lại setInterval và setTimeout  
   return (
     <div>
@@ -186,11 +187,77 @@ function Func7() { //setTimeinterval
     </div>
   )
 }
+function Func8() { //chọn ảnh
+  var [state, setState] = useState('')
+  useEffect(() => {
+    return () => {
+      URL.revokeObjectURL(state)
+    }
+  })
+  var show = e => {
+    const file = e.target.files[0]; //return list file dc chọn
+    var obj = URL.createObjectURL(file)
+    console.log(obj)
+    setState(obj)
+  }
+  return (
+    <div>
+      <input type='file' onChange={show}></input>
+      <div>
+
+        <img src={state} Style='width:50%' />
+
+      </div>
+    </div>
+  )
+}
+function Func9(){ //
+  return(
+    <div>
+
+    </div>
+  )
+}
+function Func10(){ //useLayoutEffect()
+  var [state,setState]=useState(0)
+  useLayoutEffect(()=>{
+    if(state>3){
+      setState(0);
+    }
+  },[state])
+  // var test=()=>{
+  //   setState((state+1>3?0:state+1)); // ko can dung useLayoutEffect()
+  // }
+  var test=()=>{
+    setState((state+1));
+  }
+  return (
+    <div>
+      <h1>{state}</h1>
+      <button onClick={test}>Ok</button>
+    </div>
+  )
+}
+function Func11(){ //useLayoutEffect()
+  var [state,setState]=useState(0)
+  useLayoutEffect(()=>{
+    
+  },[state])
+  var test=()=>{
+    setState((state+1));
+  }
+  return (
+    <div>
+      <h1>{state}</h1>
+      <button onClick={test}>Ok</button>
+    </div>
+  )
+}
 function App() {
 
   return (
     <div className="App">
-      
+      <Func11 />
     </div>
   );
 }

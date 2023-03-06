@@ -1,4 +1,6 @@
-import { useState, useEffect,useLayoutEffect } from "react";
+import { useState, useEffect, useLayoutEffect, useReducer, useRef, useCallback } from "react";
+// import Show from "./testmemo";
+import Show from "./testcallBackmemo";
 function Func1() { //checkradio
   var [test, setTest] = useState();
   const obj = [
@@ -211,25 +213,25 @@ function Func8() { //chọn ảnh
     </div>
   )
 }
-function Func9(){ //
-  return(
+function Func9() { //
+  return (
     <div>
 
     </div>
   )
 }
-function Func10(){ //useLayoutEffect()
-  var [state,setState]=useState(0)
-  useLayoutEffect(()=>{
-    if(state>3){
+function Func10() { //useLayoutEffect()
+  var [state, setState] = useState(0)
+  useLayoutEffect(() => {
+    if (state > 3) {
       setState(0);
     }
-  },[state])
+  }, [state])
   // var test=()=>{
   //   setState((state+1>3?0:state+1)); // ko can dung useLayoutEffect()
   // }
-  var test=()=>{
-    setState((state+1));
+  var test = () => {
+    setState((state + 1));
   }
   return (
     <div>
@@ -238,18 +240,48 @@ function Func10(){ //useLayoutEffect()
     </div>
   )
 }
-function Func11(){ //useLayoutEffect()
-  var [state,setState]=useState(0)
-  useLayoutEffect(()=>{
-    
-  },[state])
-  var test=()=>{
-    setState((state+1));
+function Func11() { //useRef()
+  var [state, setState] = useState(0)
+  var ref = useRef();
+  useEffect(() => {
+    ref.current = state
+  }, [state]) //đặt state vào để useEffect check value static hiện tại và trước đó, nếu khác sẽ chạy useEffect()
+  var test = () => {
+    setState(state + 1)
   }
+  console.log(state, ref.current);
   return (
     <div>
       <h1>{state}</h1>
       <button onClick={test}>Ok</button>
+    </div>
+  )
+}
+function Func12() { //memo()
+  var [state, setState] = useState(0)
+  var test = () => {
+    setState(state + 1)
+  }
+  return (
+    <div>
+      <Show /> {/*check prop memo*/}
+      <h1>{state}</h1>
+      <button onClick={test}>Ok</button>
+    </div>
+  )
+}
+function Func13() { //callBack(,) và memo()
+  var [state, setState] = useState(0)
+  //mỗi lần reload sẽ create 1 static mới cho func
+  var test = useCallback(() => {
+    setState(pre => pre + 1)
+  }, [])// nếu có deps và bị thay đổi khi reload sẽ create 1 static mới và test sẽ ref vào static mới,ko còn ref vào static trước đó nữa
+  //sử dụng callBack để create static 1 lần cho func
+  //những lần sau sẽ test sẽ ref đến static func đã create trước đó
+  return (
+    <div>
+      <Show prop1={test} /> {/*check prop memo*/}
+      <h1>{state}</h1>
     </div>
   )
 }
@@ -257,7 +289,7 @@ function App() {
 
   return (
     <div className="App">
-      <Func11 />
+      <Func13 />
     </div>
   );
 }

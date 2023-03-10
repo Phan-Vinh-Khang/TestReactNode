@@ -1,6 +1,11 @@
-import { useState, useEffect, useLayoutEffect, useReducer, useRef, useCallback } from "react";
+import { useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo, useReducer, createContext } from "react";
 // import Show from "./testmemo";
 import Show from "./testcallBackmemo";
+import './App.css'
+import Func33 from "./App3";
+import FuncReducer from "./FuncReducer"
+import { typeInput, AddList } from "./ChildFuncReducer"
+
 function Func1() { //checkradio
   var [test, setTest] = useState();
   const obj = [
@@ -285,12 +290,104 @@ function Func13() { //callBack(,) và memo()
     </div>
   )
 }
+function Func14() { //useMemo()
+  var [state, setState] = useState();
+  var [state2, setState2] = useState();
+  var [liststate, setListstate] = useState([]);
+  var input1 = (e) => {
+    setState(e.target.value)
+  }
+  var input2 = (e) => {
+    setState2(e.target.value)
+  }
+  var res = () => {
+    setListstate([...liststate, Number(state) + Number(state2)])
+  }
+  return (
+    <div>
+      <input onChange={input1}></input>
+      <input onChange={input2}></input>
+      <button onClick={res}>Ok</button>
+      <p>{state}</p>
+      <p>{state2}</p>
+      {
+        liststate.map(w => <p>{w}</p>)
+      }
+    </div>
+  )
+}
+var func = (state, action) => {
+  if (action == 'u')
+    return state + 1;
+  else return state - 1;
+}
+function Func15() { //useReducer()
+  var [reducer, action] = useReducer(func, 0)
+  return (
+    <div>
+      <p>{reducer}</p>
+      <button onClick={() => action('u')}>U</button>
+      <button onClick={() => action('d')}>D</button>
+    </div>
+  )
+}
+function FuncInputReducer(state, str) { //return static stateReducer,sau đó sẽ check state hiện tại và state trước đó,nếu khác sẽ ref vào state này
+  return str;
+}
+function FuncAddListReducer(state, obj) { //return static stateReducer,sau đó sẽ check state hiện tại và state trước đó,nếu khác sẽ ref vào state này
+  return [...state, obj];
+}
+function Func16() { //useReducer() 1
+  var [reducer, dispatchReducer] = useReducer(FuncInputReducer, '')
+  var [listreducer, dispatchListreducer] = useReducer(FuncAddListReducer, [])
+  var TypeInput = (e) => {
+    dispatchReducer(e.target.value)
+  }
+  var AddList = (reducer) => {
+    dispatchListreducer(reducer)
+  }
+  return (
+    <div>
+      <h2>useReducer() 1</h2>
+      <input onChange={TypeInput}></input>
+      <button onClick={() => { AddList(reducer) }}>Ok</button>
+      <p>{reducer}</p>
+      {
+        listreducer.map(w => <p>{w}</p>)
+      }
+    </div>
+  )
+}
+function Func17() { //useReducer() 2
+  var [reducer, dispatchReducer] = useReducer(FuncReducer,
+    {
+      typeInput: '',
+      listjobs: []
+    })
+  var useRef1 = useRef();
+  var test = () => {
+    dispatchReducer(AddList(reducer.typeInput))
+    useRef1.current.focus();
+  }
+  return (
+    <div>
+      <h2>useReducer() 2</h2>
+      <input ref={useRef1} value={reducer.typeInput} onChange={e => { dispatchReducer(typeInput(e.target.value)) }}></input>
+      {/*ko hiển thị nhưng vẫn nhận event onChange*/}
+      <button onClick={test}>Ok</button>
+      <p>{reducer.typeInput}</p>
+      <ul>
+        {reducer.listjobs.map(w => <li>{w}</li>)}
+      </ul>
+    </div>
+  )
+}
 function App() {
-
   return (
     <div className="App">
-      <Func13 />
+      <Func17 />
     </div>
+
   );
 }
 

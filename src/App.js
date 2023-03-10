@@ -2,7 +2,6 @@ import { useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo, use
 // import Show from "./testmemo";
 import Show from "./testcallBackmemo";
 import './App.css'
-import Func33 from "./App3";
 import FuncReducer from "./FuncReducer"
 import { typeInput, AddList } from "./ChildFuncReducer"
 

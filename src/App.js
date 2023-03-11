@@ -1,10 +1,11 @@
-import { useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo, useReducer, createContext } from "react";
+import { useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo, useReducer, createContext, useContext } from "react";
 // import Show from "./testmemo";
 import Show from "./testcallBackmemo";
-import './App.css'
 import FuncReducer from "./FuncReducer"
 import { typeInput, AddList } from "./ChildFuncReducer"
-
+import "./App.css"
+import Func18file2 from "./AppFunc18";
+import Context from "./Func19/Context";
 function Func1() { //checkradio
   var [test, setTest] = useState();
   const obj = [
@@ -381,13 +382,32 @@ function Func17() { //useReducer() 2
     </div>
   )
 }
+export const Func18_Context = createContext();
+function Func18() { //useContext()
+  var [state, setState] = useState('color1')
+  var test = () => {
+    (state == 'color1' ? setState('default') : setState('color1'))
+  }
+  return (
+    <Func18_Context.Provider value={state}> {/*wrap elements*,các element dc wrap sẽ sử dụng dc properties value của Context*/}
+      <div>
+        <Func18file2 />
+        <button onClick={test}>Ok</button>
+      </div>
+    </Func18_Context.Provider>
+  )
+}
 function App() {
+  var [reducer,dispatch]=useContext(Context)
+  console.log(reducer)
   return (
     <div className="App">
-      <Func17 />
+      <div>
+        a
+      </div>
     </div>
 
-  );
+  )
 }
 
 export default App;

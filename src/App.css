@@ -1,6 +1,5 @@
-.color1{
-  color:blueviolet;
-  font-size: larger;
-  font-weight: bold;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+*{
+  margin: 0;
+  padding: 0;
+  margin-left: 2px;
 }

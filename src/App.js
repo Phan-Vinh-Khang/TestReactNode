@@ -5,7 +5,9 @@ import FuncReducer from "./FuncReducer"
 import { typeInput, AddList } from "./ChildFuncReducer"
 import "./App.css"
 import Func18file2 from "./AppFunc18";
-import Context from "./Func19/Context";
+import Func19 from "./Func19/Func19";
+import FuncCSS1 from "./TestCSS/CSS1/CSS1"
+import FuncCSS2 from "./TestCSS/CSS2/CSS2"
 function Func1() { //checkradio
   var [test, setTest] = useState();
   const obj = [
@@ -398,13 +400,11 @@ function Func18() { //useContext()
   )
 }
 function App() {
-  var [reducer,dispatch]=useContext(Context)
-  console.log(reducer)
   return (
+    
     <div className="App">
-      <div>
-        a
-      </div>
+      <FuncCSS1/>
+      <FuncCSS1 btn3/>
     </div>
 
   )

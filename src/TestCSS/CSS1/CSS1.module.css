@@ -1,0 +1,20 @@
+.btn1{
+    padding: 10px 15px;
+    background-color:mediumaquamarine;
+    border-radius: 5px;
+    border:1px solid;
+}
+.btn2{
+    padding: 10px 15px;
+    background-color:gray;
+    border-radius: 5px;
+    border:1px solid;
+    color: whitesmoke;
+}
+.btn3{
+    background-color:brown;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.testmodulecss2{
+    font-size: larger;
+}

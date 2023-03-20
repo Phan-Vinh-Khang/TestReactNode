@@ -5,13 +5,16 @@ import './App.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import WrapElements from './Func19/WrapContext';
+import { BrowserRouter } from "react-router-dom"
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <WrapElements>
-    {/* <React.StrictMode> */}
-    <App />
-    {/* </React.StrictMode> */}
-  </WrapElements>
+  <BrowserRouter>
+    <WrapElements>
+      {/* <React.StrictMode> */}
+      <App />
+      {/* </React.StrictMode> */}
+    </WrapElements>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

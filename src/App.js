@@ -1,4 +1,5 @@
 import { useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo, useReducer, createContext, useContext } from "react";
+import { Routes, Route, Link } from "react-router-dom"
 // import Show from "./testmemo";
 import Show from "./testcallBackmemo";
 import FuncReducer from "./FuncReducer"
@@ -8,6 +9,8 @@ import Func18file2 from "./AppFunc18";
 import Func19 from "./Func19/Func19";
 import FuncCSS1 from "./TestCSS/CSS1/CSS1"
 import FuncCSS2 from "./TestCSS/CSS2/CSS2"
+import Home from "./TestRouter/Home"
+import News from "./TestRouter/News"
 function Func1() { //checkradio
   var [test, setTest] = useState();
   const obj = [
@@ -401,12 +404,25 @@ function Func18() { //useContext()
 }
 function App() {
   return (
-    
     <div className="App">
-      <FuncCSS1/>
-      <FuncCSS1 btn3/>
-    </div>
+      {/* <FuncCSS1 />
+      <FuncCSS1 btn3 /> */}
 
+      <nav>
+        <ul>
+          <li>
+            <Link to="testpath">Home</Link>
+          </li>
+          <li>
+            <Link to="/testpath2">News</Link>
+          </li>
+        </ul>
+      </nav>
+      <Routes>
+        <Route path="testpath" element={<Home />}></Route>
+        <Route path="/testpath2" element={<News />}></Route>
+      </Routes>
+    </div>
   )
 }
 
